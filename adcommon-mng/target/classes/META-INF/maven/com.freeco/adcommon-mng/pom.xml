@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.freeco</groupId>
+    <artifactId>adcommon</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.freeco</groupId>
+  <artifactId>adcommon-mng</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>adcommon-mng Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+  
+		<dependency>
+			<groupId>com.freeco</groupId>
+			<artifactId>adcommon-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- 访问JSP页面必须配置 -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+		   <groupId>javax.servlet</groupId>
+		   <artifactId>jstl</artifactId>
+		</dependency>
+		
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+    <build>
+		<resources>
+			<resource>
+			    <directory>src/main/java</directory>
+			    <includes>
+			        <include>**/*.xml</include>
+			    </includes>
+			</resource>
+			<resource>
+			    <directory>src/main/resources</directory>
+			    <includes>
+			        <include>**.*</include>
+			        <include>**/*.*</include><!-- i18n能读取到 -->
+			         <include>**/*/*.*</include>
+			    </includes>
+			</resource>
+			<resource>
+			    <directory>src/main/webapp</directory>
+              	<!--注意此次必须要放在此目录下才能被访问到-->
+                <targetPath>META-INF/resources</targetPath>
+                <includes>
+                    <include>**/**</include>
+			        <include>**/*.*</include>
+			         <include>**/*/*.*</include>
+                </includes>
+			</resource>
+		</resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+           
+	            <configuration>
+		             <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
+		            <!-- 指定该Main Class为全局的唯一入口 -->
+		            <mainClass>org.adcommon.App</mainClass>
+		            <layout>ZIP</layout>
+	          	</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal><!--可以把依赖的包都打包到生成的Jar包中-->
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+        </plugins>
+        <finalName>adcommon-mng</finalName>
+    </build>
+</project>
